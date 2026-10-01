@@ -15,7 +15,8 @@ RUN git clone --depth 1 https://github.com/fafawlf/claude-code-web.git .
 
 # Install Claude Code CLI. Authentication is supplied through Railway variables.
 RUN npm install -g @anthropic-ai/claude-code
-RUN npm ci
+# NODE_ENV=production skips devDependencies; the build needs TypeScript and other dev tooling.
+RUN npm ci --include=dev
 RUN npm run build
 
 # Railway injects PORT automatically. The app listens on 0.0.0.0 so the public
